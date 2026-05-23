@@ -216,9 +216,6 @@ export default function Home() {
             </div>
           </details>
 
-          <a href="#request" className="button-secondary hidden lg:inline-flex">
-            Request early access
-          </a>
         </div>
       </header>
 
