@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { EarlyAccessForm } from "@/components/EarlyAccessForm";
 
@@ -169,14 +170,16 @@ export default function Home() {
 
       <header className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/75 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
-          <Link href="#home" className="flex items-center gap-3" aria-label="ProofWarden home">
-            <span className="grid h-10 w-10 place-items-center rounded-2xl border border-cyan-300/30 bg-cyan-300/10 text-lg font-black text-cyan-200 shadow-[0_0_40px_rgba(34,211,238,0.25)]">
-              P
-            </span>
-            <span>
-              <span className="block text-sm font-semibold tracking-[0.28em] text-cyan-100">PROOFWARDEN</span>
-              <span className="block text-xs text-slate-400">AI action evidence infrastructure</span>
-            </span>
+          <Link href="#home" className="brand-lockup" aria-label="ProofWarden home">
+            <Image
+              src="/brand/proofwarden-logo.svg"
+              alt="ProofWarden"
+              width={520}
+              height={128}
+              priority
+              className="h-12 w-auto"
+            />
+            <span className="hidden text-xs text-slate-400 sm:block">AI action evidence infrastructure</span>
           </Link>
 
           <nav className="hidden items-center gap-7 text-sm text-slate-300 lg:flex" aria-label="Primary navigation">

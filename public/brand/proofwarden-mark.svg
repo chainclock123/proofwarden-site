@@ -1,0 +1,29 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">ProofWarden shield mark</title>
+  <desc id="desc">A futuristic cyan and violet shield containing a stylized letter P.</desc>
+  <defs>
+    <linearGradient id="shieldStroke" x1="24" y1="15" x2="104" y2="112" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#22D3EE"/>
+      <stop offset="0.55" stop-color="#38BDF8"/>
+      <stop offset="1" stop-color="#8B5CF6"/>
+    </linearGradient>
+    <linearGradient id="pFill" x1="40" y1="31" x2="88" y2="95" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#67E8F9"/>
+      <stop offset="0.48" stop-color="#0EA5E9"/>
+      <stop offset="1" stop-color="#7C3AED"/>
+    </linearGradient>
+    <filter id="glow" x="0" y="0" width="128" height="128" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="3.5" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.117647 0 0 0 0 0.827451 0 0 0 0 0.933333 0 0 0 0.45 0"/>
+      <feBlend in2="SourceGraphic" mode="screen"/>
+    </filter>
+  </defs>
+  <path d="M64 10L107 27V63C107 89 89 110 64 119C39 110 21 89 21 63V27L64 10Z" fill="#03101F" stroke="url(#shieldStroke)" stroke-width="5"/>
+  <path d="M32 35L64 22L96 35" stroke="#67E8F9" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+  <path d="M32 78C37 93 48 103 64 109C80 103 91 93 96 78" stroke="#8B5CF6" stroke-width="4" stroke-linecap="round" opacity="0.9"/>
+  <g filter="url(#glow)">
+    <path d="M45 39H72C84 39 93 47 93 59C93 71 84 79 72 79H59V96H45V39ZM59 53V66H71C76 66 79 63 79 59C79 55 76 53 71 53H59Z" fill="url(#pFill)"/>
+    <path d="M35 57H72C76 57 79 60 79 64C79 68 76 71 72 71H35V57Z" fill="#1D4ED8" opacity="0.8"/>
+    <path d="M45 73H60V96H45V73Z" fill="#7C3AED" opacity="0.72"/>
+  </g>
+</svg>
