@@ -17,6 +17,7 @@
 
 html {
   background: var(--background);
+  scroll-padding-top: 6.5rem;
 }
 
 body {

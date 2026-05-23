@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
   const primaryInterest = clean(payload.primaryInterest);
   const message = clean(payload.message);
 
-  if (!fullName || !email || !company || !role || !primaryInterest || !message) {
+  if (!fullName || !email || !company || !primaryInterest) {
     return NextResponse.json({ message: "Please complete all required fields." }, { status: 400 });
   }
 
@@ -84,11 +84,11 @@ export async function POST(request: NextRequest) {
     `Name: ${fullName}`,
     `Email: ${email}`,
     `Company: ${company}`,
-    `Role: ${role}`,
+    `Role: ${role || "Not provided"}`,
     `Primary interest: ${primaryInterest}`,
     "",
     "Message:",
-    message,
+    message || "Not provided",
   ].join("\n");
 
   const emailHtml = `
@@ -96,10 +96,10 @@ export async function POST(request: NextRequest) {
     <p><strong>Name:</strong> ${escapeHtml(fullName)}</p>
     <p><strong>Email:</strong> ${escapeHtml(email)}</p>
     <p><strong>Company:</strong> ${escapeHtml(company)}</p>
-    <p><strong>Role:</strong> ${escapeHtml(role)}</p>
+    <p><strong>Role:</strong> ${escapeHtml(role || "Not provided")}</p>
     <p><strong>Primary interest:</strong> ${escapeHtml(primaryInterest)}</p>
     <p><strong>Message:</strong></p>
-    <p>${escapeHtml(message).replace(/\n/g, "<br />")}</p>
+    <p>${escapeHtml(message || "Not provided").replace(/\n/g, "<br />")}</p>
   `;
 
   const resendResponse = await fetch("https://api.resend.com/emails", {

@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { EarlyAccessForm } from "@/components/EarlyAccessForm";
+import { MobileNavigation } from "@/components/MobileNavigation";
 
 const navItems = [
-  { label: "Product", href: "#product" },
+  { label: "How it works", href: "#product" },
   { label: "Architecture", href: "#architecture" },
   { label: "Use Cases", href: "#use-cases" },
   { label: "FAQ", href: "#faq" },
@@ -102,13 +103,20 @@ const useCases = [
 const sampleReceipt = [
   ["Receipt ID", "PWR-2026-000184"],
   ["Action type", "Procurement request"],
-  ["Boundary", "PO threshold under 5,000"],
+  ["Boundary", "PO threshold under $5,000"],
+  ["Approval state", "Within delegated authority"],
   ["Vault reference", "vault://customer/po/8472"],
   ["Event hash", "9f3a...72c1"],
-  ["DUAL anchor", "confirmed"],
+  ["DUAL anchor", "Confirmed"],
   ["Timestamp", "2026-05-23 14:32 UTC"],
-  ["Review status", "ready for inspection"],
+  ["Review status", "Ready for inspection"],
 ];
+
+const positiveReceiptValues = new Set([
+  "Within delegated authority",
+  "Confirmed",
+  "Ready for inspection",
+]);
 
 const secondaryUseCases = [
   "Customer assurance evidence requests",
@@ -145,6 +153,16 @@ const faqs = [
       "ProofWarden is evidence infrastructure for AI-agent actions. It helps enterprise AI deployers and risk teams capture bounded agent events, anchor proof metadata, and assemble reviewer-verifiable evidence records.",
   },
   {
+    question: "What problem does ProofWarden solve?",
+    answer:
+      "ProofWarden helps teams preserve and verify the evidence trail around AI-agent actions, especially when logs, summaries, approvals, or operational narratives may change after the action occurs.",
+  },
+  {
+    question: "Who is ProofWarden for?",
+    answer:
+      "ProofWarden is designed for enterprise AI deployers, risk teams, governance teams, assurance teams, audit teams, compliance reviewers, and AI operations teams.",
+  },
+  {
     question: "What is an AI-agent action?",
     answer:
       "An AI-agent action is an operational step taken or initiated by an AI system, such as accessing a tool, preparing a purchase order, routing an exception, requesting data, approving a low-risk workflow, or escalating an operational process.",
@@ -173,11 +191,6 @@ const faqs = [
     question: "What happens when an action is out of bounds?",
     answer:
       "ProofWarden preserves the event as exception evidence and assembles a review record so reviewers can inspect what happened.",
-  },
-  {
-    question: "Who is ProofWarden for?",
-    answer:
-      "ProofWarden is designed for enterprise AI deployers, risk teams, governance teams, assurance teams, audit teams, compliance reviewers, and AI operations teams.",
   },
   {
     question: "Is ProofWarden available now?",
@@ -218,31 +231,13 @@ export default function Home() {
             ))}
           </nav>
 
-          <details className="mobile-nav relative lg:hidden">
-            <summary
-              className="grid h-11 w-11 cursor-pointer list-none place-items-center rounded-2xl border border-cyan-300/25 bg-cyan-300/10 text-cyan-100 shadow-[0_0_30px_rgba(34,211,238,0.14)] transition hover:border-cyan-200/50 hover:bg-cyan-300/15"
-              aria-label="Open navigation"
-            >
-              <span className="sr-only">Open navigation</span>
-              <span className="flex flex-col gap-1.5" aria-hidden="true">
-                <span className="block h-0.5 w-5 rounded-full bg-cyan-100" />
-                <span className="block h-0.5 w-5 rounded-full bg-cyan-100" />
-                <span className="block h-0.5 w-5 rounded-full bg-cyan-100" />
-              </span>
-            </summary>
-            <div className="absolute right-0 top-14 z-50 w-64 rounded-3xl border border-cyan-200/20 bg-slate-950/95 p-3 shadow-2xl shadow-cyan-950/50 backdrop-blur-xl">
-              <nav className="grid gap-1 text-sm text-slate-200" aria-label="Mobile navigation">
-                {navItems.map((item) => (
-                  <a key={item.href} href={item.href} className="rounded-2xl px-4 py-3 transition hover:bg-cyan-300/10 hover:text-cyan-100">
-                    {item.label}
-                  </a>
-                ))}
-                <a href="#request" className="mt-2 rounded-2xl border border-cyan-300/25 bg-cyan-300/10 px-4 py-3 font-semibold text-cyan-100 transition hover:bg-cyan-300/15">
-                  Request early access
-                </a>
-              </nav>
-            </div>
-          </details>
+          <div className="hidden lg:block">
+            <a href="#request" className="button-primary min-h-10 px-4 py-2 text-sm">
+              Request early access
+            </a>
+          </div>
+
+          <MobileNavigation navItems={navItems} />
 
         </div>
       </header>
@@ -267,8 +262,8 @@ export default function Home() {
               <a href="#request" className="button-primary">
                 Request early access
               </a>
-              <a href="#architecture" className="button-ghost">
-                Explore the architecture
+              <a href="#product" className="button-ghost">
+                See how it works
               </a>
             </div>
           </div>
@@ -279,7 +274,7 @@ export default function Home() {
               <div className="mb-6 border-b border-white/10 pb-5">
                 <div>
                   <p className="text-xs uppercase tracking-[0.3em] text-cyan-200">Evidence chain</p>
-                  <h2 className="mt-2 whitespace-nowrap text-xl font-semibold text-white sm:text-2xl">event → receipt → record</h2>
+                  <h2 className="mt-2 text-balance text-xl font-semibold text-white sm:text-2xl">event → receipt → record</h2>
                 </div>
               </div>
 
@@ -353,9 +348,9 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <SectionIntro
             centered
-            eyebrow="Product model"
-            title="ProofWarden turns bounded AI-agent actions into reviewer-verifiable evidence records."
-            body="The core model is intentionally narrow: capture the event, anchor the receipt, and assemble the record."
+            eyebrow="How it works"
+            title="Prove what happened, then make the trail reviewable."
+            body="ProofWarden follows a narrow sequence: capture the event, anchor the receipt, and assemble the record."
           />
           <div className="mt-14 grid gap-6 lg:grid-cols-3">
             {proofChain.map((item, index) => (
@@ -399,7 +394,7 @@ export default function Home() {
                 {sampleReceipt.map(([label, value]) => (
                   <div key={label} className="grid gap-2 rounded-xl border border-white/5 bg-white/[0.025] px-4 py-3 sm:grid-cols-[11rem_1fr]">
                     <dt className="text-cyan-200">{label}:</dt>
-                    <dd className={value === "confirmed" || value === "ready for inspection" ? "text-emerald-200" : "break-words text-slate-100"}>
+                    <dd className={positiveReceiptValues.has(value) ? "text-emerald-200" : "break-words text-slate-100"}>
                       {value}
                     </dd>
                   </div>
@@ -595,7 +590,7 @@ export default function Home() {
             <p className="mt-2 max-w-md text-sm leading-6 text-slate-400">Evidence infrastructure for AI-agent actions.</p>
           </div>
           <div className="grid gap-4 text-sm text-slate-400 sm:grid-cols-2 lg:grid-cols-4">
-            <a href="#product" className="hover:text-cyan-200">Product</a>
+            <a href="#product" className="hover:text-cyan-200">How it works</a>
             <a href="#architecture" className="hover:text-cyan-200">Architecture</a>
             <a href="#use-cases" className="hover:text-cyan-200">Use Cases</a>
             <a href="#faq" className="hover:text-cyan-200">FAQ</a>

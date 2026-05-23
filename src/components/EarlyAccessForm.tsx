@@ -81,8 +81,8 @@ export function EarlyAccessForm() {
           <input className="field-input" name="company" type="text" autoComplete="organization" required />
         </label>
         <label className="field-label">
-          <span>Role / title</span>
-          <input className="field-input" name="role" type="text" autoComplete="organization-title" required />
+          <span>Role / title <span className="font-normal text-slate-500">(optional)</span></span>
+          <input className="field-input" name="role" type="text" autoComplete="organization-title" />
         </label>
       </div>
 
@@ -101,12 +101,11 @@ export function EarlyAccessForm() {
       </label>
 
       <label className="field-label">
-        <span>Message</span>
+        <span>Message <span className="font-normal text-slate-500">(optional)</span></span>
         <textarea
-          className="field-input min-h-36 resize-y"
+          className="field-input min-h-28 resize-y"
           name="message"
-          placeholder="Tell us what kind of AI-agent actions, workflows, or evidence questions you are exploring."
-          required
+          placeholder="Optional: tell us what kind of AI-agent actions, workflows, or evidence questions you are exploring."
         />
       </label>
 
@@ -119,7 +118,7 @@ export function EarlyAccessForm() {
       </button>
 
       <p className="max-w-xl text-xs leading-5 text-slate-500">
-        By submitting, you agree that ProofWarden may use your details to respond to your early-access request. See{" "}
+        We&apos;ll only use your details to respond to your request. See{" "}
         <Link href="/privacy" className="text-cyan-200 hover:text-cyan-100">
           Privacy Notice
         </Link>
