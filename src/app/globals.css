@@ -36,7 +36,14 @@ body {
 
 .brand-lockup img {
   filter: drop-shadow(0 0 18px rgba(34, 211, 238, 0.18));
-  max-width: min(13.5rem, 54vw);
+  max-width: min(3rem, 18vw);
+}
+
+.brand-wordmark {
+  display: inline-flex;
+  font-size: 1.45rem;
+  font-weight: 750;
+  line-height: 1;
 }
 
 ::selection {

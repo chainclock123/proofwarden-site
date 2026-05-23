@@ -172,14 +172,18 @@ export default function Home() {
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
           <Link href="#home" className="brand-lockup" aria-label="ProofWarden home">
             <Image
-              src="/brand/proofwarden-logo.svg"
-              alt="ProofWarden"
-              width={520}
-              height={128}
+              src="/brand/proofwarden-mark.png"
+              alt=""
+              width={811}
+              height={1046}
               priority
               className="h-12 w-auto"
             />
-            <span className="hidden text-xs text-slate-400 lg:block">AI action evidence infrastructure</span>
+            <span className="brand-wordmark" aria-hidden="true">
+              <span className="text-white">Proof</span>
+              <span className="text-cyan-300">Warden</span>
+            </span>
+            <span className="hidden text-xs text-slate-400 xl:block">AI action evidence infrastructure</span>
           </Link>
 
           <nav className="hidden items-center gap-7 text-sm text-slate-300 lg:flex" aria-label="Primary navigation">

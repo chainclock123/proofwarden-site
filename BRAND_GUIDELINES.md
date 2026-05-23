@@ -8,8 +8,9 @@ ProofWarden is evidence infrastructure for AI-agent actions. The brand should fe
 
 Primary logo:
 
-- Use `public/brand/proofwarden-logo.svg` for the full horizontal lockup.
-- Use `public/brand/proofwarden-mark.svg` where space is constrained.
+- Use `public/brand/proofwarden-mark.png` for the shield mark.
+- Use `public/brand/proofwarden-mark-source.png` as the retained original supplied source asset.
+- Build horizontal lockups from the shield mark plus the `ProofWarden` wordmark text.
 - Keep clear space around the logo equal to at least half the shield height.
 - Do not place the mark on busy imagery without a dark overlay.
 
