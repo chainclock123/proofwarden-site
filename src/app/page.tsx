@@ -244,11 +244,6 @@ export default function Home() {
                 Explore the architecture
               </a>
             </div>
-            <div className="mt-10 grid max-w-xl grid-cols-3 gap-3 text-xs text-slate-400">
-              <Metric value="Vault" label="Raw evidence custody" />
-              <Metric value="DUAL" label="Proof anchoring" />
-              <Metric value="Record" label="Reviewer inspection" />
-            </div>
           </div>
 
           <div className="relative">
@@ -550,15 +545,6 @@ export default function Home() {
         <p className="mx-auto mt-8 max-w-7xl text-xs text-slate-600">© {new Date().getFullYear()} ProofWarden. All rights reserved.</p>
       </footer>
     </main>
-  );
-}
-
-function Metric({ value, label }: { value: string; label: string }) {
-  return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-      <p className="font-mono text-lg text-cyan-100">{value}</p>
-      <p className="mt-2 leading-5">{label}</p>
-    </div>
   );
 }
 
