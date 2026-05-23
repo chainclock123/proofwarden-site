@@ -31,8 +31,8 @@ export default function PrivacyPage() {
           </p>
           <p>
             To request deletion of submitted contact information, contact:{" "}
-            <a className="text-cyan-200 hover:text-cyan-100" href="mailto:proofwarden.thirstily220@simplelogin.com">
-              proofwarden.thirstily220@simplelogin.com
+            <a className="text-cyan-200 hover:text-cyan-100" href="mailto:hello@proofwarden.com">
+              hello@proofwarden.com
             </a>
           </p>
           <p>This notice may be updated as ProofWarden develops.</p>

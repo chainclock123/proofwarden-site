@@ -6,7 +6,7 @@ Dark, futuristic single-page website for **ProofWarden**, an active enterprise p
 - Hosting target: Vercel
 - Stack: Next.js, TypeScript, Tailwind CSS
 - Primary CTA: Request early access
-- Form recipient: `proofwarden.thirstily220@simplelogin.com`
+- Public contact: `hello@proofwarden.com`
 - Stitch project reference: `https://stitch.withgoogle.com/projects/13685598950125997591`
 
 ## What is included
@@ -54,7 +54,7 @@ cp .env.example .env.local
 Required for production email submission:
 
 ```text
-CONTACT_TO_EMAIL=proofwarden.thirstily220@simplelogin.com
+CONTACT_TO_EMAIL=hello@proofwarden.com
 RESEND_API_KEY=<your transactional email provider key>
 CONTACT_FROM_EMAIL=<verified sender address>
 ```

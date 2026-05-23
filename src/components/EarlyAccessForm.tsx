@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { FormEvent, useMemo, useState } from "react";
 
 type FormState = "idle" | "submitting" | "success" | "error";
@@ -116,6 +117,14 @@ export function EarlyAccessForm() {
       >
         {buttonLabel}
       </button>
+
+      <p className="max-w-xl text-xs leading-5 text-slate-500">
+        By submitting, you agree that ProofWarden may use your details to respond to your early-access request. See{" "}
+        <Link href="/privacy" className="text-cyan-200 hover:text-cyan-100">
+          Privacy Notice
+        </Link>
+        .
+      </p>
 
       {state === "success" ? (
         <p className="rounded-2xl border border-cyan-300/30 bg-cyan-300/10 p-4 text-sm text-cyan-100">

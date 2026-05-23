@@ -36,24 +36,32 @@ const problemPoints = [
   "Traditional logging was not designed for reviewer-verifiable AI action evidence.",
 ];
 
+const whenProofWardenMatters = [
+  "An AI agent takes an operational action.",
+  "A reviewer later needs to reconstruct what happened.",
+  "Sensitive raw evidence cannot be broadly exposed.",
+];
+
 const architectureLayers = [
   {
     title: "Customer Evidence Vault",
     label: "Custody",
-    description:
-      "Raw prompts, logs, approvals, files, tickets, and operational records remain in customer-controlled storage.",
+    description: "Stores prompts, logs, approvals, files, tickets, and operational records.",
+    purpose: "Purpose: custody and access control.",
   },
   {
     title: "DUAL Proof Layer",
     label: "Integrity",
     description:
-      "DUAL anchors proof metadata independently from raw evidence storage using distributed-ledger infrastructure.",
+      "Stores hashes, timestamps, receipt IDs, lineage references, object references, and integrity status.",
+    purpose: "Purpose: independent proof metadata.",
   },
   {
     title: "Reviewer Evidence Record",
     label: "Judgment",
     description:
-      "Reviewers inspect a structured evidence record without requiring unrestricted access to every raw operational record.",
+      "Contains event summary, boundary mapping, receipt metadata, reason codes, verifier access, and review context.",
+    purpose: "Purpose: inspection and verification.",
   },
 ];
 
@@ -73,17 +81,33 @@ const useCases = [
     title: "AI-agent procurement controls",
     description:
       "Capture and verify agent actions around purchase orders, spend thresholds, approval rules, and authority limits.",
+    example:
+      "Example: an AI agent prepares or routes a purchase order under a defined spend threshold.",
   },
   {
     title: "Sensitive data and tool access",
     description:
       "Preserve evidence when AI agents access controlled systems, customer data, internal tools, or restricted workflows.",
+    example: "Example: an AI agent accesses a controlled system or customer dataset.",
   },
   {
     title: "Exception and incident reconstruction",
     description:
       "Assemble review records when agent actions cross boundaries, miss approvals, or require post-action investigation.",
+    example:
+      "Example: an agent action exceeds a limit or lacks approval, and ProofWarden preserves the exception as review evidence.",
   },
+];
+
+const sampleReceipt = [
+  ["Receipt ID", "PWR-2026-000184"],
+  ["Action type", "Procurement request"],
+  ["Boundary", "PO threshold under 5,000"],
+  ["Vault reference", "vault://customer/po/8472"],
+  ["Event hash", "9f3a...72c1"],
+  ["DUAL anchor", "confirmed"],
+  ["Timestamp", "2026-05-23 14:32 UTC"],
+  ["Review status", "ready for inspection"],
 ];
 
 const secondaryUseCases = [
@@ -231,7 +255,10 @@ export default function Home() {
               Evidence infrastructure for AI-agent actions.
             </h1>
             <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-300 md:text-xl">
-              ProofWarden helps enterprise AI deployers and risk teams capture bounded AI-agent actions, anchor proof metadata through DUAL, and assemble reviewer-verifiable evidence records.
+              For enterprise AI deployers and risk teams that need to prove what AI agents did, what boundary applied, and whether the evidence trail can be trusted.
+            </p>
+            <p className="mt-5 max-w-2xl text-base leading-7 text-slate-300">
+              ProofWarden captures bounded AI-agent actions, anchors proof metadata through DUAL, and assembles reviewer-verifiable evidence records.
             </p>
             <p className="mt-5 max-w-2xl text-base leading-7 text-slate-400">
               Raw evidence stays in your vault. Proof metadata is anchored on DUAL. Reviewers get a record they can inspect.
@@ -286,18 +313,19 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section-padding border-y border-white/10 bg-white/[0.02]" aria-label="Trust statement">
-        <div className="mx-auto grid max-w-7xl gap-5 px-6 lg:grid-cols-3 lg:px-8">
-          {[
-            ["Bounded actions", "Start from the control, approval rule, access condition, threshold, or reviewer question."],
-            ["Independent proof metadata", "Anchor hashes, timestamps, receipt references, lineage, and verifier-readable proof fields on DUAL."],
-            ["Reviewer-verifiable records", "Package events, boundaries, receipts, reason codes, and exception context into inspection-ready records."],
-          ].map(([title, description]) => (
-            <div key={title} className="rounded-3xl border border-white/10 bg-slate-900/60 p-6">
-              <h3 className="text-lg font-semibold text-white">{title}</h3>
-              <p className="mt-3 text-sm leading-6 text-slate-400">{description}</p>
-            </div>
-          ))}
+      <section className="section-padding border-y border-white/10 bg-white/[0.02]" aria-label="When ProofWarden matters">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <p className="text-xs font-semibold uppercase tracking-[0.26em] text-cyan-200">When ProofWarden matters</p>
+          <div className="mt-6 grid gap-5 lg:grid-cols-3">
+            {whenProofWardenMatters.map((item, index) => (
+              <div key={item} className="rounded-3xl border border-white/10 bg-slate-900/60 p-6">
+                <div className="mb-5 grid h-10 w-10 place-items-center rounded-2xl border border-cyan-300/25 bg-cyan-300/10 font-mono text-sm text-cyan-100">
+                  0{index + 1}
+                </div>
+                <p className="text-lg font-semibold leading-7 text-white">{item}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -349,6 +377,36 @@ export default function Home() {
               </div>
             ))}
           </div>
+
+          <div className="mt-12 grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
+            <div className="max-w-2xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.26em] text-cyan-200">Sample action receipt</p>
+              <h3 className="mt-4 text-3xl font-semibold tracking-tight text-white">
+                A compact record of what happened, what boundary applied, and where the evidence lives.
+              </h3>
+              <p className="mt-5 text-sm leading-7 text-slate-300">
+                The receipt gives reviewers a stable starting point without moving sensitive raw prompts, files, logs, or approvals out of the customer evidence vault.
+              </p>
+            </div>
+            <div className="overflow-hidden rounded-[1.5rem] border border-cyan-300/20 bg-slate-950/90 shadow-2xl shadow-cyan-950/35">
+              <div className="flex items-center gap-2 border-b border-white/10 bg-white/[0.03] px-5 py-3">
+                <span className="h-2.5 w-2.5 rounded-full bg-rose-300/80" />
+                <span className="h-2.5 w-2.5 rounded-full bg-amber-300/80" />
+                <span className="h-2.5 w-2.5 rounded-full bg-cyan-300/80" />
+                <span className="ml-3 font-mono text-xs text-slate-500">proofwarden receipt</span>
+              </div>
+              <dl className="grid gap-3 p-5 font-mono text-xs sm:text-sm">
+                {sampleReceipt.map(([label, value]) => (
+                  <div key={label} className="grid gap-2 rounded-xl border border-white/5 bg-white/[0.025] px-4 py-3 sm:grid-cols-[11rem_1fr]">
+                    <dt className="text-cyan-200">{label}:</dt>
+                    <dd className={value === "confirmed" || value === "ready for inspection" ? "text-emerald-200" : "break-words text-slate-100"}>
+                      {value}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -370,6 +428,9 @@ export default function Home() {
                 <p className="text-xs uppercase tracking-[0.28em] text-cyan-200">{layer.label}</p>
                 <h3 className="mt-4 text-2xl font-semibold text-white">{layer.title}</h3>
                 <p className="mt-4 text-sm leading-7 text-slate-300">{layer.description}</p>
+                <p className="mt-5 rounded-2xl border border-cyan-300/15 bg-cyan-300/10 p-4 text-sm font-medium leading-6 text-cyan-50">
+                  {layer.purpose}
+                </p>
               </div>
             ))}
           </div>
@@ -439,6 +500,9 @@ export default function Home() {
                 <span className="font-mono text-sm text-cyan-200">0{index + 1}</span>
                 <h3 className="mt-5 text-2xl font-semibold text-white">{useCase.title}</h3>
                 <p className="mt-4 text-sm leading-7 text-slate-300">{useCase.description}</p>
+                <p className="mt-5 rounded-2xl border border-white/10 bg-slate-950/40 p-4 text-sm leading-6 text-slate-300">
+                  {useCase.example}
+                </p>
               </div>
             ))}
           </div>

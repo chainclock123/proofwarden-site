@@ -14,10 +14,10 @@ export const metadata: Metadata = {
     siteName: "ProofWarden",
     images: [
       {
-        url: "/downloads/proofwarden-infographic.png",
-        width: 1024,
-        height: 1536,
-        alt: "ProofWarden futuristic AI action evidence infrastructure infographic",
+        url: "/og/proofwarden-og.png",
+        width: 1200,
+        height: 630,
+        alt: "ProofWarden evidence infrastructure for AI-agent actions",
       },
     ],
     type: "website",
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     title: "ProofWarden - Evidence Infrastructure for AI-Agent Actions",
     description:
       "Capture bounded AI-agent actions, anchor proof metadata through DUAL, and assemble reviewer-verifiable evidence records.",
-    images: ["/downloads/proofwarden-infographic.png"],
+    images: ["/og/proofwarden-og.png"],
   },
 };
 
