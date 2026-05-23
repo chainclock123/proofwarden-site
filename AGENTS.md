@@ -1,10 +1,6 @@
 # ProofWarden Site - Agent Instructions
 
-## Scope
-
-These instructions apply to the entire repository unless a more specific `AGENTS.md` is added in a subdirectory.
-
-## Project Goal
+## Project goal
 
 Build proofwarden.com as a dark, futuristic, single-page educational website for ProofWarden, an active enterprise product providing evidence infrastructure for AI-agent actions.
 
@@ -16,23 +12,27 @@ Enterprise AI deployers, risk teams, governance teams, audit teams, assurance te
 
 Request early access.
 
-## Canonical Domain
+## Canonical domain
 
 proofwarden.com
 
 Redirect www.proofwarden.com to proofwarden.com after deployment.
 
-## Stack Preference
+## Stack
 
-Use Next.js, TypeScript, Tailwind CSS, and a clean componentized structure suitable for deployment on Vercel.
+Next.js, TypeScript, Tailwind CSS, and a clean componentized structure suitable for deployment on Vercel.
 
-## Design Source Of Truth
+## Design source of truth
 
-Use the Stitch MCP design context / Design DNA as the visual source of truth.
+Use the Stitch MCP design context / Design DNA as the visual source of truth when available.
+
+Stitch project reference:
+
+https://stitch.withgoogle.com/projects/13685598950125997591
 
 The site should be dark, futuristic, enterprise-grade, spacious, polished, and credible. Use the ProofWarden infographic as visual inspiration, but avoid making the web page too dense.
 
-## Content Constraints
+## Content constraints
 
 Do not include founder name or founder bio.
 
@@ -41,12 +41,11 @@ Do not claim that ProofWarden determines compliance, assigns liability, approves
 Do not imply raw evidence is stored on DUAL.
 
 Always preserve the distinction between:
+- Customer Evidence Vault
+- DUAL Proof Layer
+- Reviewer Evidence Record
 
-- customer evidence vault
-- DUAL proof layer
-- reviewer evidence record
-
-## Required Sections
+## Required sections
 
 - Hero
 - Problem
@@ -60,52 +59,46 @@ Always preserve the distinction between:
 - About
 - Request early access
 - Footer
-- Privacy Notice page at `/privacy`
+- Privacy Notice page at /privacy
 
-## Required Form Recipient
+## Required form recipient
 
 Early access requests should be sent to:
 
-`proofwarden.thirstily220@simplelogin.com`
+proofwarden.thirstily220@simplelogin.com
 
 Use this through an environment variable:
 
-`CONTACT_TO_EMAIL=proofwarden.thirstily220@simplelogin.com`
+CONTACT_TO_EMAIL=proofwarden.thirstily220@simplelogin.com
 
-## Security Requirements
+## Security requirements
 
-- Do not hardcode secrets.
-- Use server-side form handling.
-- Use environment variables for email provider keys.
-- Do not expose API keys client-side.
-- Validate required fields.
-- Include a hidden honeypot field for basic spam protection.
+Do not hardcode secrets.
 
-## Build Checks
+Use server-side form handling.
+
+Use environment variables for email provider keys.
+
+Do not expose API keys client-side.
+
+Validate required fields.
+
+Include a hidden honeypot field for basic spam protection.
+
+## Build checks
 
 Before finishing, run:
 
-```bash
 npm run lint
 npm run build
-```
 
-If those scripts do not exist, add reasonable equivalents.
-
-## Review Guidelines
+## Review guidelines
 
 Check for:
-
-- responsive layout
-- accessible colour contrast
-- working anchor navigation
-- working or clearly documented contact form route
-- no secrets committed
-- no overclaiming in product copy
-- `/privacy` page linked in footer
-
-## Git
-
-- Use short, descriptive commit messages.
-- Do not rewrite shared history unless explicitly asked.
-- Preserve unrelated user changes in the worktree.
+- Responsive layout
+- Accessible colour contrast
+- Working anchor navigation
+- Working or clearly documented contact form route
+- No secrets committed
+- No overclaiming in product copy
+- /privacy page linked in footer
