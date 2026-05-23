@@ -1,40 +1,68 @@
-<svg width="520" height="128" viewBox="0 0 520 128" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+<svg width="760" height="208" viewBox="0 0 760 208" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
   <title id="title">ProofWarden logo</title>
-  <desc id="desc">ProofWarden wordmark with a cyan and violet shield mark.</desc>
+  <desc id="desc">ProofWarden wordmark with a glossy cyan, blue, and violet shield mark.</desc>
   <defs>
-    <linearGradient id="shieldStroke" x1="24" y1="15" x2="104" y2="112" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#22D3EE"/>
-      <stop offset="0.55" stop-color="#38BDF8"/>
-      <stop offset="1" stop-color="#8B5CF6"/>
+    <linearGradient id="outerShield" x1="47" y1="23" x2="159" y2="177" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#08E5F7"/>
+      <stop offset="0.28" stop-color="#1596F5"/>
+      <stop offset="0.72" stop-color="#0865F1"/>
+      <stop offset="1" stop-color="#6B5CFF"/>
     </linearGradient>
-    <linearGradient id="pFill" x1="40" y1="31" x2="88" y2="95" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#67E8F9"/>
-      <stop offset="0.48" stop-color="#0EA5E9"/>
-      <stop offset="1" stop-color="#7C3AED"/>
+    <linearGradient id="topBevel" x1="53" y1="23" x2="159" y2="69" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#08E7F7"/>
+      <stop offset="0.56" stop-color="#13B7F6"/>
+      <stop offset="1" stop-color="#0EA5E9"/>
     </linearGradient>
-    <linearGradient id="wordCyan" x1="304" y1="34" x2="498" y2="90" gradientUnits="userSpaceOnUse">
+    <linearGradient id="lowerBevel" x1="48" y1="112" x2="156" y2="179" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6E63FF"/>
+      <stop offset="0.44" stop-color="#2563EB"/>
+      <stop offset="1" stop-color="#0EA5E9"/>
+    </linearGradient>
+    <linearGradient id="pMain" x1="72" y1="62" x2="132" y2="145" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#66F5FF"/>
+      <stop offset="0.42" stop-color="#12BDF3"/>
+      <stop offset="0.72" stop-color="#0C7CF0"/>
+      <stop offset="1" stop-color="#6B5CFF"/>
+    </linearGradient>
+    <linearGradient id="wordCyan" x1="475" y1="63" x2="700" y2="135" gradientUnits="userSpaceOnUse">
       <stop stop-color="#67E8F9"/>
       <stop offset="1" stop-color="#06B6D4"/>
     </linearGradient>
-    <filter id="markGlow" x="0" y="0" width="128" height="128" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-      <feGaussianBlur stdDeviation="3.5" result="blur"/>
-      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.117647 0 0 0 0 0.827451 0 0 0 0 0.933333 0 0 0 0.45 0"/>
+    <radialGradient id="innerGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(104 95) rotate(90) scale(75 70)">
+      <stop stop-color="#0B2B6F"/>
+      <stop offset="0.62" stop-color="#02112D"/>
+      <stop offset="1" stop-color="#020817"/>
+    </radialGradient>
+    <filter id="markGlow" x="27" y="10" width="154" height="188" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.063 0 0 0 0 0.67 0 0 0 0 0.95 0 0 0 0.55 0"/>
       <feBlend in2="SourceGraphic" mode="screen"/>
     </filter>
-    <filter id="textShadow" x="120" y="28" width="390" height="74" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+    <filter id="textShadow" x="191" y="48" width="530" height="94" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
       <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#020617" flood-opacity="0.7"/>
     </filter>
   </defs>
-  <path d="M64 10L107 27V63C107 89 89 110 64 119C39 110 21 89 21 63V27L64 10Z" fill="#03101F" stroke="url(#shieldStroke)" stroke-width="5"/>
-  <path d="M32 35L64 22L96 35" stroke="#67E8F9" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
-  <path d="M32 78C37 93 48 103 64 109C80 103 91 93 96 78" stroke="#8B5CF6" stroke-width="4" stroke-linecap="round" opacity="0.9"/>
+
   <g filter="url(#markGlow)">
-    <path d="M45 39H72C84 39 93 47 93 59C93 71 84 79 72 79H59V96H45V39ZM59 53V66H71C76 66 79 63 79 59C79 55 76 53 71 53H59Z" fill="url(#pFill)"/>
-    <path d="M35 57H72C76 57 79 60 79 64C79 68 76 71 72 71H35V57Z" fill="#1D4ED8" opacity="0.8"/>
-    <path d="M45 73H60V96H45V73Z" fill="#7C3AED" opacity="0.72"/>
+    <path d="M104 24L163 58V112C163 140 144 165 104 183C64 165 45 140 45 112V58L104 24Z" fill="url(#outerShield)"/>
+    <path d="M104 34L154 63V111C154 134 140 155 104 172C68 155 54 134 54 111V63L104 34Z" fill="url(#innerGlow)"/>
+    <path d="M104 24L163 58L154 63L104 34L54 63L45 58L104 24Z" fill="url(#topBevel)"/>
+    <path d="M45 58L54 63V111C54 134 68 155 104 172V183C64 165 45 140 45 112V58Z" fill="#0855E8" opacity="0.9"/>
+    <path d="M163 58L154 63V111C154 134 140 155 104 172V183C144 165 163 140 163 112V58Z" fill="#08BFF2" opacity="0.72"/>
+    <path d="M104 172C75 158 60 142 56 124L46 113C46 141 65 166 104 183C143 166 162 141 162 113L152 124C148 142 133 158 104 172Z" fill="url(#lowerBevel)"/>
+    <path d="M104 34V172" stroke="#12BDF3" stroke-width="1" opacity="0.32"/>
+    <path d="M104 24L163 58V112C163 140 144 165 104 183C64 165 45 140 45 112V58L104 24Z" stroke="#0EE7FF" stroke-width="2" opacity="0.72"/>
   </g>
-  <g filter="url(#textShadow)" font-family="Inter, Arial, Helvetica, sans-serif" font-size="48" font-weight="750" letter-spacing="-1">
-    <text x="136" y="80" fill="#F8FAFC">Proof</text>
-    <text x="260" y="80" fill="url(#wordCyan)">Warden</text>
+
+  <path d="M76 64H115C131 64 142 74 142 89C142 104 131 114 115 114H94V149L76 135V101H115C122 101 127 96 127 89C127 82 122 78 115 78H76V64Z" fill="url(#pMain)"/>
+  <path d="M76 64H115C131 64 142 74 142 89C142 104 131 114 115 114H94V149L76 135V101H115C122 101 127 96 127 89C127 82 122 78 115 78H76V64Z" stroke="#61F3FF" stroke-width="2" opacity="0.78"/>
+  <path d="M76 64L94 78H76V64Z" fill="#A7F7FF" opacity="0.34"/>
+  <path d="M76 101L94 114V149L76 135V101Z" fill="#776CFF" opacity="0.56"/>
+  <path d="M94 114H115C129 114 138 107 141 96L94 135V114Z" fill="#0D7CF0" opacity="0.36"/>
+  <path d="M79 67H111" stroke="white" stroke-width="1.5" opacity="0.28"/>
+
+  <g filter="url(#textShadow)" font-family="Inter, Arial, Helvetica, sans-serif" font-size="58" font-weight="750" letter-spacing="0">
+    <text x="204" y="124" fill="#F8FAFC">Proof</text>
+    <text x="360" y="124" fill="url(#wordCyan)">Warden</text>
   </g>
 </svg>

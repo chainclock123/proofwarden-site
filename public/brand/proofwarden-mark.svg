@@ -1,29 +1,71 @@
-<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
   <title id="title">ProofWarden shield mark</title>
-  <desc id="desc">A futuristic cyan and violet shield containing a stylized letter P.</desc>
+  <desc id="desc">A glossy cyan, blue, and violet shield containing a stylized letter P.</desc>
   <defs>
-    <linearGradient id="shieldStroke" x1="24" y1="15" x2="104" y2="112" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#22D3EE"/>
-      <stop offset="0.55" stop-color="#38BDF8"/>
-      <stop offset="1" stop-color="#8B5CF6"/>
+    <linearGradient id="outerShield" x1="241" y1="150" x2="793" y2="869" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#08E5F7"/>
+      <stop offset="0.28" stop-color="#1596F5"/>
+      <stop offset="0.72" stop-color="#0865F1"/>
+      <stop offset="1" stop-color="#6B5CFF"/>
     </linearGradient>
-    <linearGradient id="pFill" x1="40" y1="31" x2="88" y2="95" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#67E8F9"/>
-      <stop offset="0.48" stop-color="#0EA5E9"/>
-      <stop offset="1" stop-color="#7C3AED"/>
+    <linearGradient id="topBevel" x1="270" y1="150" x2="798" y2="347" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#08E7F7"/>
+      <stop offset="0.56" stop-color="#13B7F6"/>
+      <stop offset="1" stop-color="#0EA5E9"/>
     </linearGradient>
-    <filter id="glow" x="0" y="0" width="128" height="128" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-      <feGaussianBlur stdDeviation="3.5" result="blur"/>
-      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.117647 0 0 0 0 0.827451 0 0 0 0 0.933333 0 0 0 0.45 0"/>
+    <linearGradient id="lowerBevel" x1="247" y1="552" x2="776" y2="891" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6E63FF"/>
+      <stop offset="0.44" stop-color="#2563EB"/>
+      <stop offset="1" stop-color="#0EA5E9"/>
+    </linearGradient>
+    <linearGradient id="pMain" x1="365" y1="315" x2="661" y2="720" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#66F5FF"/>
+      <stop offset="0.42" stop-color="#12BDF3"/>
+      <stop offset="0.72" stop-color="#0C7CF0"/>
+      <stop offset="1" stop-color="#6B5CFF"/>
+    </linearGradient>
+    <linearGradient id="pEdge" x1="371" y1="316" x2="566" y2="725" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#B9FBFF" stop-opacity="0.86"/>
+      <stop offset="0.5" stop-color="#46E4FF" stop-opacity="0.38"/>
+      <stop offset="1" stop-color="#A7A5FF" stop-opacity="0.82"/>
+    </linearGradient>
+    <radialGradient id="innerGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(512 482) rotate(90) scale(363 344)">
+      <stop stop-color="#0B2B6F"/>
+      <stop offset="0.62" stop-color="#02112D"/>
+      <stop offset="1" stop-color="#020817"/>
+    </radialGradient>
+    <filter id="blueGlow" x="191" y="96" width="642" height="830" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.063 0 0 0 0 0.67 0 0 0 0 0.95 0 0 0 0.55 0"/>
       <feBlend in2="SourceGraphic" mode="screen"/>
     </filter>
+    <filter id="spark" x="231" y="525" width="562" height="62" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
   </defs>
-  <path d="M64 10L107 27V63C107 89 89 110 64 119C39 110 21 89 21 63V27L64 10Z" fill="#03101F" stroke="url(#shieldStroke)" stroke-width="5"/>
-  <path d="M32 35L64 22L96 35" stroke="#67E8F9" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
-  <path d="M32 78C37 93 48 103 64 109C80 103 91 93 96 78" stroke="#8B5CF6" stroke-width="4" stroke-linecap="round" opacity="0.9"/>
-  <g filter="url(#glow)">
-    <path d="M45 39H72C84 39 93 47 93 59C93 71 84 79 72 79H59V96H45V39ZM59 53V66H71C76 66 79 63 79 59C79 55 76 53 71 53H59Z" fill="url(#pFill)"/>
-    <path d="M35 57H72C76 57 79 60 79 64C79 68 76 71 72 71H35V57Z" fill="#1D4ED8" opacity="0.8"/>
-    <path d="M45 73H60V96H45V73Z" fill="#7C3AED" opacity="0.72"/>
+
+  <g filter="url(#blueGlow)">
+    <path d="M512 119L801 285V553C801 692 708 813 512 900C316 813 223 692 223 553V285L512 119Z" fill="url(#outerShield)"/>
+    <path d="M512 166L756 306V548C756 658 685 761 512 841C339 761 268 658 268 548V306L512 166Z" fill="url(#innerGlow)"/>
+    <path d="M512 119L801 285L756 306L512 166L268 306L223 285L512 119Z" fill="url(#topBevel)"/>
+    <path d="M223 285L268 306V548C268 658 339 761 512 841V900C316 813 223 692 223 553V285Z" fill="#0855E8" opacity="0.9"/>
+    <path d="M801 285L756 306V548C756 658 685 761 512 841V900C708 813 801 692 801 553V285Z" fill="#08BFF2" opacity="0.72"/>
+    <path d="M512 841C371 775 298 695 276 610L225 557C226 697 318 815 512 900C706 815 798 697 799 557L748 610C726 695 653 775 512 841Z" fill="url(#lowerBevel)"/>
+    <path d="M512 166V841" stroke="#12BDF3" stroke-width="2" opacity="0.32"/>
+    <path d="M512 119L801 285V553C801 692 708 813 512 900C316 813 223 692 223 553V285L512 119Z" stroke="#0EE7FF" stroke-width="8" opacity="0.72"/>
   </g>
+
+  <g filter="url(#spark)" opacity="0.92">
+    <path d="M257 554H767" stroke="#09E9FF" stroke-width="9" stroke-linecap="round"/>
+  </g>
+
+  <path d="M376 320H568C648 320 700 370 700 443C700 516 648 565 568 565H465V735L376 668V501H567C602 501 625 478 625 443C625 409 602 386 567 386H376V320Z" fill="url(#pMain)"/>
+  <path d="M376 320H568C648 320 700 370 700 443C700 516 648 565 568 565H465V735L376 668V501H567C602 501 625 478 625 443C625 409 602 386 567 386H376V320Z" stroke="#61F3FF" stroke-width="8" opacity="0.78"/>
+  <path d="M376 320L465 386H376V320Z" fill="#A7F7FF" opacity="0.34"/>
+  <path d="M376 501L465 565V735L376 668V501Z" fill="#776CFF" opacity="0.56"/>
+  <path d="M465 565H568C635 565 681 529 696 472L465 668V565Z" fill="#0D7CF0" opacity="0.36"/>
+  <path d="M379 322H568C645 322 696 370 696 443" stroke="url(#pEdge)" stroke-width="4" opacity="0.86"/>
+  <path d="M376 501H568C602 501 625 478 625 443" stroke="#06132D" stroke-width="5" opacity="0.35"/>
+  <path d="M390 334H548" stroke="white" stroke-width="5" opacity="0.28"/>
+  <circle cx="512" cy="322" r="12" fill="#67E8F9" opacity="0.85"/>
 </svg>
