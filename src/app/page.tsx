@@ -252,7 +252,7 @@ export default function Home() {
               <div className="mb-6 border-b border-white/10 pb-5">
                 <div>
                   <p className="text-xs uppercase tracking-[0.3em] text-cyan-200">Evidence chain</p>
-                  <h2 className="mt-2 whitespace-nowrap text-xl font-semibold text-white sm:text-2xl">event - receipt - record</h2>
+                  <h2 className="mt-2 whitespace-nowrap text-xl font-semibold text-white sm:text-2xl">event → receipt → record</h2>
                 </div>
               </div>
 
@@ -276,7 +276,7 @@ export default function Home() {
 
               <div className="mt-6 rounded-3xl border border-violet-300/20 bg-violet-300/10 p-5">
                 <p className="text-sm font-medium text-violet-100">Exception path</p>
-                <p className="mt-2 font-mono text-sm text-cyan-100">event - exception - review record</p>
+                <p className="mt-2 font-mono text-sm text-cyan-100">event → exception → review record</p>
                 <p className="mt-3 text-sm leading-6 text-slate-300">
                   When an action crosses a boundary, ProofWarden preserves the exception as evidence instead of making the action look cleaner than it was.
                 </p>
@@ -375,7 +375,7 @@ export default function Home() {
           </div>
 
           <div className="mt-8 rounded-[2rem] border border-cyan-300/20 bg-cyan-300/10 p-6 text-center text-sm leading-7 text-cyan-50">
-            Customer Evidence Vault - DUAL Proof Layer - Reviewer Evidence Record
+            Customer Evidence Vault → DUAL Proof Layer → Reviewer Evidence Record
           </div>
         </div>
       </section>
@@ -401,7 +401,7 @@ export default function Home() {
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-[1fr_0.95fr] lg:px-8">
           <div className="rounded-[2rem] border border-amber-300/20 bg-amber-300/10 p-8 shadow-2xl shadow-amber-950/20">
             <p className="text-xs uppercase tracking-[0.28em] text-amber-100">Exception path</p>
-            <h2 className="mt-4 font-mono text-2xl text-amber-50 md:text-3xl">event - exception - review record</h2>
+            <h2 className="mt-4 font-mono text-2xl text-amber-50 md:text-3xl">event → exception → review record</h2>
             <div className="mt-8 space-y-4">
               {[
                 "Threshold exceeded",
