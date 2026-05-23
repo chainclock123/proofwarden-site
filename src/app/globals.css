@@ -170,6 +170,10 @@ body {
   border-color: rgba(103, 232, 249, 0.5);
 }
 
+.mobile-nav summary::-webkit-details-marker {
+  display: none;
+}
+
 .prose-dark a {
   text-decoration: none;
 }
