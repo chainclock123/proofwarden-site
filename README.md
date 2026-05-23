@@ -21,6 +21,12 @@ Dark, futuristic single-page website for **ProofWarden**, an active enterprise p
 - `www.proofwarden.com` to `proofwarden.com` redirect middleware
 - SEO and Open Graph metadata
 
+## Deployment status
+
+- Vercel project: `chainclock123s-projects/proofwarden-site`
+- GitHub integration: `chainclock123/proofwarden-site` on `main`
+- Last Vercel import verification: `2026-05-23T04:10:03Z`
+
 ## Local development
 
 ```bash
