@@ -250,12 +250,11 @@ export default function Home() {
           <div className="relative">
             <div className="absolute -inset-8 rounded-[3rem] bg-cyan-300/10 blur-3xl" />
             <div className="relative overflow-hidden rounded-[2rem] border border-cyan-200/20 bg-slate-900/80 p-6 shadow-2xl shadow-cyan-950/60 backdrop-blur-xl">
-              <div className="mb-6 flex items-center justify-between border-b border-white/10 pb-5">
+              <div className="mb-6 border-b border-white/10 pb-5">
                 <div>
                   <p className="text-xs uppercase tracking-[0.3em] text-cyan-200">Proof chain</p>
-                  <h2 className="mt-2 text-2xl font-semibold text-white">event - receipt - record</h2>
+                  <h2 className="mt-2 whitespace-nowrap text-xl font-semibold text-white sm:text-2xl">event - receipt - record</h2>
                 </div>
-                <div className="rounded-full border border-cyan-300/30 px-3 py-1 text-xs text-cyan-100">Live model</div>
               </div>
 
               <div className="space-y-4">

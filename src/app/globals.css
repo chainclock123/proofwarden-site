@@ -128,11 +128,23 @@ body {
 }
 
 .chain-line {
-  background: linear-gradient(180deg, rgba(103, 232, 249, 0.75), rgba(103, 232, 249, 0));
-  height: 1.5rem;
-  margin-left: 1.35rem;
-  margin-top: 0.5rem;
-  width: 1px;
+  background: linear-gradient(180deg, rgba(103, 232, 249, 0.78), rgba(103, 232, 249, 0.08));
+  bottom: -1.6rem;
+  left: 2.6rem;
+  position: absolute;
+  top: 4.75rem;
+  width: 2px;
+}
+
+.chain-line::after {
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 7px solid rgba(103, 232, 249, 0.78);
+  bottom: -0.35rem;
+  content: "";
+  left: 50%;
+  position: absolute;
+  transform: translateX(-50%);
 }
 
 .field-label {
