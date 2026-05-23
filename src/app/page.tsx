@@ -179,7 +179,7 @@ export default function Home() {
               priority
               className="h-12 w-auto"
             />
-            <span className="hidden text-xs text-slate-400 sm:block">AI action evidence infrastructure</span>
+            <span className="hidden text-xs text-slate-400 lg:block">AI action evidence infrastructure</span>
           </Link>
 
           <nav className="hidden items-center gap-7 text-sm text-slate-300 lg:flex" aria-label="Primary navigation">
@@ -216,7 +216,7 @@ export default function Home() {
             </div>
           </details>
 
-          <a href="#request" className="button-secondary hidden sm:inline-flex">
+          <a href="#request" className="button-secondary hidden lg:inline-flex">
             Request early access
           </a>
         </div>
