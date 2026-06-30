@@ -7,6 +7,7 @@ const navItems = [
   { label: "How it works", href: "#product" },
   { label: "Architecture", href: "#architecture" },
   { label: "Use Cases", href: "#use-cases" },
+  { label: "Intake", href: "/intake" },
   { label: "FAQ", href: "#faq" },
   { label: "About", href: "#about" },
 ];
@@ -262,6 +263,9 @@ export default function Home() {
               <a href="#request" className="button-primary">
                 Request early access
               </a>
+              <Link href="/intake" className="button-secondary">
+                Start intake
+              </Link>
               <a href="#product" className="button-ghost">
                 See how it works
               </a>
@@ -574,6 +578,9 @@ export default function Home() {
                 <a className="download-link" href="/downloads/proofwarden-one-page-overview.pdf" download>
                   Download one-page overview
                 </a>
+                <Link className="download-link" href="/intake">
+                  Evidence Readiness intake
+                </Link>
               </div>
             </div>
           </div>
@@ -596,6 +603,7 @@ export default function Home() {
             <a href="#faq" className="hover:text-cyan-200">FAQ</a>
             <a href="#about" className="hover:text-cyan-200">About</a>
             <a href="#request" className="hover:text-cyan-200">Request Early Access</a>
+            <Link href="/intake" className="hover:text-cyan-200">Evidence Readiness Intake</Link>
             <Link href="/privacy" className="hover:text-cyan-200">Privacy Notice</Link>
             <a href="/downloads/proofwarden-infographic.png" download className="hover:text-cyan-200">Download infographic</a>
             <a href="/downloads/proofwarden-one-page-overview.pdf" download className="hover:text-cyan-200">Download one-page overview</a>

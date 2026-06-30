@@ -14,7 +14,9 @@ Dark, futuristic single-page website for **ProofWarden**, an active enterprise p
 - Single-page landing site with anchor navigation
 - Hero, problem, product model, architecture, boundaries, exception preservation, use cases, FAQ, about, and request sections
 - `/privacy` Privacy Notice page
+- `/intake` Evidence Readiness Review intake page
 - Server-side early-access form endpoint at `/api/early-access`
+- Server-side Evidence Readiness Review intake endpoint at `/api/evidence-readiness-intake`
 - Honeypot field and required-field validation
 - Downloadable infographic asset
 - Downloadable one-page overview PDF
@@ -70,7 +72,7 @@ The current API route is prepared for Resend-compatible email sending. If these 
 5. Set `proofwarden.com` as the primary domain.
 6. Configure GoDaddy DNS using the exact records Vercel provides.
 7. Add the environment variables in Vercel.
-8. Test `/privacy`, download links, mobile layout, and the early-access form.
+8. Test `/privacy`, `/intake`, download links, mobile layout, and the early-access and intake forms.
 
 ## Content guardrails
 
