@@ -1,26 +1,39 @@
 "use client";
 
 import Link from "next/link";
-import { ChangeEvent, FormEvent, useMemo, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
 import { intakeSections, requiredIntakeFieldIds, type IntakeField } from "@/lib/intakeQuestions";
 
 type FormState = "idle" | "submitting" | "success" | "error";
 type IntakeValue = string | string[];
 type IntakeValues = Record<string, IntakeValue>;
+type SavedIntakeDraft = {
+  activeSectionIndex: number;
+  updatedAt: string;
+  values: IntakeValues;
+};
 
-const initialValues = intakeSections.reduce<IntakeValues>((values, section) => {
+const draftStorageKey = "proofwarden:evidence-readiness-intake:v1";
+
+function createInitialValues() {
+  return intakeSections.reduce<IntakeValues>((values, section) => {
   for (const field of section.fields) {
     values[field.id] = field.type === "checkboxes" ? [] : "";
   }
 
   return values;
 }, {});
+}
+
+const initialValues = createInitialValues();
 
 export function EvidenceReadinessIntakeForm() {
   const [activeSectionIndex, setActiveSectionIndex] = useState(0);
   const [values, setValues] = useState<IntakeValues>(initialValues);
   const [state, setState] = useState<FormState>("idle");
   const [error, setError] = useState<string | null>(null);
+  const [lastSavedAt, setLastSavedAt] = useState<string | null>(null);
+  const [draftLoaded, setDraftLoaded] = useState(false);
 
   const activeSection = intakeSections[activeSectionIndex];
   const isFirstSection = activeSectionIndex === 0;
@@ -34,8 +47,71 @@ export function EvidenceReadinessIntakeForm() {
     return "Submit intake";
   }, [state]);
 
+  useEffect(() => {
+    const restoreTimer = window.setTimeout(() => {
+      try {
+        const savedDraft = window.localStorage.getItem(draftStorageKey);
+        if (!savedDraft) {
+          setDraftLoaded(true);
+          return;
+        }
+
+        const parsedDraft = JSON.parse(savedDraft) as Partial<SavedIntakeDraft>;
+        if (!parsedDraft.values || typeof parsedDraft.values !== "object") {
+          setDraftLoaded(true);
+          return;
+        }
+
+        const nextValues = createInitialValues();
+        for (const section of intakeSections) {
+          for (const field of section.fields) {
+            const savedValue = parsedDraft.values[field.id];
+            if (field.type === "checkboxes") {
+              nextValues[field.id] = Array.isArray(savedValue)
+                ? savedValue.filter((item): item is string => typeof item === "string")
+                : [];
+            } else {
+              nextValues[field.id] = typeof savedValue === "string" ? savedValue : "";
+            }
+          }
+        }
+
+        setValues(nextValues);
+        setActiveSectionIndex(
+          typeof parsedDraft.activeSectionIndex === "number"
+            ? clampSectionIndex(parsedDraft.activeSectionIndex)
+            : 0,
+        );
+        setLastSavedAt(formatSavedTime(parsedDraft.updatedAt));
+        setDraftLoaded(true);
+      } catch {
+        setDraftLoaded(true);
+      }
+    }, 0);
+
+    return () => window.clearTimeout(restoreTimer);
+  }, []);
+
+  function persistDraft(nextValues: IntakeValues, nextSectionIndex = activeSectionIndex) {
+    if (typeof window === "undefined") return;
+
+    const updatedAt = new Date().toISOString();
+    const draft: SavedIntakeDraft = {
+      activeSectionIndex: clampSectionIndex(nextSectionIndex),
+      updatedAt,
+      values: nextValues,
+    };
+
+    window.localStorage.setItem(draftStorageKey, JSON.stringify(draft));
+    setLastSavedAt(formatSavedTime(updatedAt));
+  }
+
   function updateValue(field: IntakeField, value: IntakeValue) {
-    setValues((currentValues) => ({ ...currentValues, [field.id]: value }));
+    setValues((currentValues) => {
+      const nextValues = { ...currentValues, [field.id]: value };
+      persistDraft(nextValues);
+      return nextValues;
+    });
     if (state === "error") {
       setState("idle");
       setError(null);
@@ -59,17 +135,31 @@ export function EvidenceReadinessIntakeForm() {
 
   function nextSection(form: HTMLFormElement) {
     if (!validateVisibleSection(form)) return;
-    setActiveSectionIndex((index) => Math.min(index + 1, intakeSections.length - 1));
+    setActiveSectionIndex((index) => {
+      const nextIndex = Math.min(index + 1, intakeSections.length - 1);
+      persistDraft(values, nextIndex);
+      return nextIndex;
+    });
     setError(null);
     setState("idle");
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   function previousSection() {
-    setActiveSectionIndex((index) => Math.max(index - 1, 0));
+    setActiveSectionIndex((index) => {
+      const nextIndex = Math.max(index - 1, 0);
+      persistDraft(values, nextIndex);
+      return nextIndex;
+    });
     setError(null);
     setState("idle");
     window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function goToSection(index: number) {
+    const nextIndex = clampSectionIndex(index);
+    setActiveSectionIndex(nextIndex);
+    persistDraft(values, nextIndex);
   }
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -117,8 +207,10 @@ export function EvidenceReadinessIntakeForm() {
       }
 
       setState("success");
-      setValues(initialValues);
+      setValues(createInitialValues());
       setActiveSectionIndex(0);
+      setLastSavedAt(null);
+      window.localStorage.removeItem(draftStorageKey);
       form.reset();
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (formError) {
@@ -140,14 +232,19 @@ export function EvidenceReadinessIntakeForm() {
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-cyan-200">
               Section {activeSectionIndex + 1} of {intakeSections.length}
             </p>
-            <p className="mt-1 text-sm text-slate-300">{completionPercent}% complete</p>
+            <p className="mt-1 text-sm text-slate-300">
+              {completionPercent}% complete
+              {draftLoaded && lastSavedAt ? (
+                <span className="text-slate-500"> · Saved on this device at {lastSavedAt}</span>
+              ) : null}
+            </p>
           </div>
           <div className="flex flex-wrap gap-2" aria-label="Intake sections">
             {intakeSections.map((section, index) => (
               <button
                 key={section.id}
                 type="button"
-                onClick={() => setActiveSectionIndex(index)}
+                onClick={() => goToSection(index)}
                 className={index === activeSectionIndex ? "step-dot step-dot-active" : "step-dot"}
                 aria-label={`Go to ${section.title}`}
                 aria-current={index === activeSectionIndex ? "step" : undefined}
@@ -235,7 +332,8 @@ export function EvidenceReadinessIntakeForm() {
         </div>
 
         <p className="max-w-2xl text-xs leading-5 text-slate-500">
-          ProofWarden uses this intake to evaluate one AI-agent workflow and one bounded action. See{" "}
+          ProofWarden uses this intake to evaluate one AI-agent workflow and one bounded action. Your draft is saved
+          automatically in this browser until you submit it. See{" "}
           <Link href="/privacy" className="text-cyan-200 hover:text-cyan-100">
             Privacy Notice
           </Link>
@@ -396,4 +494,20 @@ function FieldLabel({ field }: { field: IntakeField }) {
 function FieldHelp({ field }: { field: IntakeField }) {
   if (!field.help) return null;
   return <span className="text-xs font-normal leading-5 text-slate-500">{field.help}</span>;
+}
+
+function clampSectionIndex(index: number) {
+  return Math.min(Math.max(index, 0), intakeSections.length - 1);
+}
+
+function formatSavedTime(value: unknown) {
+  if (typeof value !== "string") return null;
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return null;
+
+  return date.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 }

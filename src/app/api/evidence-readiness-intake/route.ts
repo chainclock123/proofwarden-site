@@ -7,6 +7,11 @@ import {
 } from "@/lib/intakeQuestions";
 
 type IntakePayload = Record<string, unknown>;
+type ResendEmailResponse = {
+  id?: unknown;
+  message?: unknown;
+  name?: unknown;
+};
 
 const maxFieldLength = 5000;
 const maxEmailLength = 254;
@@ -115,15 +120,37 @@ export async function POST(request: NextRequest) {
     }),
   });
 
+  const resendData = (await resendResponse.json().catch(() => ({}))) as ResendEmailResponse;
+
   if (!resendResponse.ok) {
+    console.error("ProofWarden intake email rejected by provider", {
+      providerStatus: resendResponse.status,
+      providerMessage: cleanProviderMessage(resendData.message),
+      providerName: cleanProviderMessage(resendData.name),
+      recipientDomain: getEmailDomain(toEmail),
+      organization,
+    });
+
     return NextResponse.json(
       { message: "The intake could not be sent. Please try again later." },
       { status: 502 },
     );
   }
 
+  const deliveryId = typeof resendData.id === "string" ? resendData.id : undefined;
+
+  console.info("ProofWarden intake email accepted by provider", {
+    deliveryId,
+    recipientDomain: getEmailDomain(toEmail),
+    organization,
+  });
+
   return NextResponse.json(
-    { message: `Intake received for ${contact} at ${organization}.` },
+    {
+      message: `Intake received for ${contact} at ${organization}.`,
+      deliveryId,
+      recipient: maskEmail(toEmail),
+    },
     { status: 200 },
   );
 }
@@ -196,4 +223,22 @@ function escapeHtml(value: string) {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
+}
+
+function cleanProviderMessage(value: unknown) {
+  return typeof value === "string" ? value.slice(0, 240) : undefined;
+}
+
+function getEmailDomain(value: string) {
+  return value.includes("@") ? value.split("@").pop() : "unknown";
+}
+
+function maskEmail(value: string) {
+  const [localPart, domain] = value.split("@");
+
+  if (!localPart || !domain) {
+    return "configured recipient";
+  }
+
+  return `${localPart.slice(0, 2)}***@${domain}`;
 }
