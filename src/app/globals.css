@@ -212,6 +212,27 @@ body {
   flex: 0 0 auto;
 }
 
+.step-dot {
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  color: rgb(148, 163, 184);
+  display: inline-flex;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 0.72rem;
+  height: 1.85rem;
+  justify-content: center;
+  transition: all 180ms ease;
+  width: 1.85rem;
+}
+
+.step-dot:hover,
+.step-dot-active {
+  background: rgba(34, 211, 238, 0.16);
+  border-color: rgba(103, 232, 249, 0.54);
+  color: rgb(207, 250, 254);
+}
+
 .intake-section {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 1.5rem;
