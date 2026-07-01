@@ -24,7 +24,13 @@ type ReceivedEmail = {
 const defaultAcceptedRecipients = ["hello@proofwarden.com"];
 
 export async function POST(request: NextRequest) {
-  if (!isAuthorized(request)) {
+  const expectedToken = process.env.RESEND_INBOUND_TOKEN;
+  if (!expectedToken) {
+    console.error("ProofWarden inbound forwarding is missing RESEND_INBOUND_TOKEN");
+    return NextResponse.json({ message: "Inbound email forwarding is not configured." }, { status: 503 });
+  }
+
+  if (!isAuthorized(request, expectedToken)) {
     return NextResponse.json({ message: "Unauthorized." }, { status: 401 });
   }
 
@@ -61,12 +67,15 @@ export async function POST(request: NextRequest) {
   const forwardTo = process.env.INBOUND_FORWARD_TO;
 
   if (!resendApiKey || !fromEmail || !forwardTo) {
-    console.info("ProofWarden inbound email received without forwarding configured", {
+    console.error("ProofWarden inbound forwarding is missing required environment configuration", {
       emailId,
       fromDomain: getEmailDomain(clean(event.data?.from)),
+      hasResendApiKey: Boolean(resendApiKey),
+      hasContactFromEmail: Boolean(fromEmail),
+      hasInboundForwardTo: Boolean(forwardTo),
       recipients: recipients.map(maskEmail),
     });
-    return NextResponse.json({ message: "Inbound email received." }, { status: 200 });
+    return NextResponse.json({ message: "Inbound email forwarding is not configured." }, { status: 503 });
   }
 
   const receivedEmail = await getReceivedEmail(resendApiKey, emailId);
@@ -134,13 +143,7 @@ export async function POST(request: NextRequest) {
   return NextResponse.json({ message: "Inbound email received." }, { status: 200 });
 }
 
-function isAuthorized(request: NextRequest) {
-  const expectedToken = process.env.RESEND_INBOUND_TOKEN;
-
-  if (!expectedToken) {
-    return true;
-  }
-
+function isAuthorized(request: NextRequest, expectedToken: string) {
   const suppliedToken =
     request.headers.get("x-proofwarden-inbound-token") ?? request.nextUrl.searchParams.get("token");
 
