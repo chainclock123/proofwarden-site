@@ -6,7 +6,7 @@ Dark, futuristic single-page website for **ProofWarden**, an active enterprise p
 - Hosting target: Vercel
 - Stack: Next.js, TypeScript, Tailwind CSS
 - Primary CTA: Request early access
-- Public contact: `hello@proofwarden.com`
+- Public contact: `info@proofwarden.com`
 - Stitch project reference: `https://stitch.withgoogle.com/projects/13685598950125997591`
 
 ## What is included
@@ -56,12 +56,28 @@ cp .env.example .env.local
 Required for production email submission:
 
 ```text
-CONTACT_TO_EMAIL=hello@proofwarden.com
+CONTACT_TO_EMAIL=info@proofwarden.com
 RESEND_API_KEY=<your transactional email provider key>
-CONTACT_FROM_EMAIL=<verified sender address>
+CONTACT_FROM_EMAIL=ProofWarden <info@proofwarden.com>
 ```
 
 The current API route is prepared for Resend-compatible email sending. If these variables are not configured, the form route returns a safe 503 configuration message rather than exposing secrets or silently dropping requests.
+
+Optional for Resend inbound email notifications:
+
+```text
+INBOUND_FORWARD_TO=<your real inbox for inbound notifications>
+RESEND_INBOUND_TOKEN=<shared secret for the inbound webhook URL>
+INBOUND_ACCEPTED_RECIPIENTS=info@proofwarden.com
+```
+
+Configure the Resend `email.received` webhook URL as:
+
+```text
+https://proofwarden.com/api/resend/inbound?token=<RESEND_INBOUND_TOKEN>
+```
+
+Resend inbound webhooks send received-email metadata first. The route retrieves the received email through the Resend API and sends a notification to `INBOUND_FORWARD_TO`.
 
 ## Deployment on Vercel
 
@@ -72,7 +88,10 @@ The current API route is prepared for Resend-compatible email sending. If these 
 5. Set `proofwarden.com` as the primary domain.
 6. Configure GoDaddy DNS using the exact records Vercel provides.
 7. Add the environment variables in Vercel.
-8. Test `/privacy`, `/intake`, download links, mobile layout, and the early-access and intake forms.
+8. In Resend, add and verify `proofwarden.com` for sending.
+9. Add the Resend DNS records at the DNS provider, including DKIM/SPF/DMARC for sending and the receiving MX record if Resend should handle inbound mail for `info@proofwarden.com`.
+10. Add a Resend webhook for `email.received` pointing at `/api/resend/inbound`.
+11. Test `/privacy`, `/intake`, download links, mobile layout, the early-access and intake forms, and one inbound email to `info@proofwarden.com`.
 
 ## Content guardrails
 

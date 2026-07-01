@@ -65,11 +65,11 @@ Always preserve the distinction between:
 
 Early access requests should be sent to:
 
-hello@proofwarden.com
+info@proofwarden.com
 
 Use this through an environment variable:
 
-CONTACT_TO_EMAIL=hello@proofwarden.com
+CONTACT_TO_EMAIL=info@proofwarden.com
 
 ## Security requirements
 
