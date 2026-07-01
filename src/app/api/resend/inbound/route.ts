@@ -21,7 +21,7 @@ type ReceivedEmail = {
   attachments?: unknown;
 };
 
-const defaultAcceptedRecipients = ["info@proofwarden.com"];
+const defaultAcceptedRecipients = ["hello@proofwarden.com"];
 
 export async function POST(request: NextRequest) {
   if (!isAuthorized(request)) {
