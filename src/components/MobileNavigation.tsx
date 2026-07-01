@@ -42,11 +42,11 @@ export function MobileNavigation({ navItems }: { navItems: NavItem[] }) {
             </a>
           ))}
           <a
-            href="#request"
+            href="/evidence-readiness-review"
             onClick={closeMenu}
             className="mt-2 rounded-2xl border border-cyan-300/25 bg-cyan-300/10 px-4 py-3 font-semibold text-cyan-100 transition hover:bg-cyan-300/15"
           >
-            Request early access
+            Evidence Readiness Review
           </a>
         </nav>
       </div>

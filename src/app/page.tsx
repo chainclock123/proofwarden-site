@@ -6,6 +6,7 @@ import { MobileNavigation } from "@/components/MobileNavigation";
 const navItems = [
   { label: "How it works", href: "#product" },
   { label: "Architecture", href: "#architecture" },
+  { label: "Readiness Review", href: "/evidence-readiness-review" },
   { label: "Use Cases", href: "#use-cases" },
   { label: "FAQ", href: "#faq" },
   { label: "About", href: "#about" },
@@ -262,9 +263,9 @@ export default function Home() {
               <a href="#request" className="button-primary">
                 Request early access
               </a>
-              <a href="#product" className="button-ghost">
-                See how it works
-              </a>
+              <Link href="/evidence-readiness-review" className="button-ghost">
+                Evidence Readiness Review
+              </Link>
             </div>
           </div>
 
@@ -592,6 +593,7 @@ export default function Home() {
           <div className="grid gap-4 text-sm text-slate-400 sm:grid-cols-2 lg:grid-cols-4">
             <a href="#product" className="hover:text-cyan-200">How it works</a>
             <a href="#architecture" className="hover:text-cyan-200">Architecture</a>
+            <Link href="/evidence-readiness-review" className="hover:text-cyan-200">Evidence Readiness Review</Link>
             <a href="#use-cases" className="hover:text-cyan-200">Use Cases</a>
             <a href="#faq" className="hover:text-cyan-200">FAQ</a>
             <a href="#about" className="hover:text-cyan-200">About</a>
