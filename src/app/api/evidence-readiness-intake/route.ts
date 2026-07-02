@@ -86,7 +86,7 @@ export async function POST(request: NextRequest) {
 
   const resendApiKey = process.env.RESEND_API_KEY;
   const fromEmail = process.env.CONTACT_FROM_EMAIL;
-  const toEmail = process.env.CONTACT_TO_EMAIL ?? "hello@proofwarden.com";
+  const toEmails = parseRecipientEmails(process.env.CONTACT_TO_EMAIL, "hello@proofwarden.com");
 
   if (!resendApiKey || !fromEmail) {
     return NextResponse.json(
@@ -112,7 +112,7 @@ export async function POST(request: NextRequest) {
     },
     body: JSON.stringify({
       from: fromEmail,
-      to: [toEmail],
+      to: toEmails,
       reply_to: email,
       subject,
       text: emailText,
@@ -127,7 +127,7 @@ export async function POST(request: NextRequest) {
       providerStatus: resendResponse.status,
       providerMessage: cleanProviderMessage(resendData.message),
       providerName: cleanProviderMessage(resendData.name),
-      recipientDomain: getEmailDomain(toEmail),
+      recipientDomains: toEmails.map(getEmailDomain),
       organization,
     });
 
@@ -138,10 +138,50 @@ export async function POST(request: NextRequest) {
   }
 
   const deliveryId = typeof resendData.id === "string" ? resendData.id : undefined;
+  const confirmationSubject = "ProofWarden received your Evidence Readiness Review intake";
+  const confirmationText = buildConfirmationText(contact, organization);
+  const confirmationHtml = buildConfirmationHtml(contact, organization);
+  const confirmationResponse = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${resendApiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from: fromEmail,
+      to: [email],
+      reply_to: toEmails[0],
+      subject: confirmationSubject,
+      text: confirmationText,
+      html: confirmationHtml,
+    }),
+  });
+
+  const confirmationData = (await confirmationResponse.json().catch(() => ({}))) as ResendEmailResponse;
+
+  if (!confirmationResponse.ok) {
+    console.error("ProofWarden intake confirmation email rejected by provider", {
+      providerStatus: confirmationResponse.status,
+      providerMessage: cleanProviderMessage(confirmationData.message),
+      providerName: cleanProviderMessage(confirmationData.name),
+      recipientDomain: getEmailDomain(email),
+      deliveryId,
+      organization,
+    });
+
+    return NextResponse.json(
+      { message: "The intake was received, but the confirmation email could not be sent." },
+      { status: 502 },
+    );
+  }
+
+  const confirmationDeliveryId = typeof confirmationData.id === "string" ? confirmationData.id : undefined;
 
   console.info("ProofWarden intake email accepted by provider", {
     deliveryId,
-    recipientDomain: getEmailDomain(toEmail),
+    confirmationDeliveryId,
+    recipientDomains: toEmails.map(getEmailDomain),
+    confirmationRecipientDomain: getEmailDomain(email),
     organization,
   });
 
@@ -149,7 +189,9 @@ export async function POST(request: NextRequest) {
     {
       message: `Intake received for ${contact} at ${organization}.`,
       deliveryId,
-      recipient: maskEmail(toEmail),
+      confirmationDeliveryId,
+      recipient: toEmails.map(maskEmail).join(", "),
+      confirmationRecipient: maskEmail(email),
     },
     { status: 200 },
   );
@@ -216,6 +258,33 @@ function buildHtml(values: Map<string, string | string[]>) {
   `;
 }
 
+function buildConfirmationText(contact: string, organization: string) {
+  return [
+    `Hi ${contact},`,
+    "",
+    `ProofWarden received your Evidence Readiness Review intake for ${organization}.`,
+    "",
+    "We will review the workflow, bounded action, review boundary, source capture, evidence custody, and exception context you submitted.",
+    "",
+    "Please do not send secrets, credentials, raw sensitive evidence, privileged material, or customer payloads by email. We will follow up if sanitized supporting materials are needed.",
+    "",
+    "ProofWarden",
+  ].join("\n");
+}
+
+function buildConfirmationHtml(contact: string, organization: string) {
+  return `
+    <div style="font-family:Arial,sans-serif;color:#0f172a;">
+      <h1 style="font-size:20px;margin:0 0 12px;">ProofWarden received your intake</h1>
+      <p>Hi ${escapeHtml(contact)},</p>
+      <p>ProofWarden received your Evidence Readiness Review intake for <strong>${escapeHtml(organization)}</strong>.</p>
+      <p>We will review the workflow, bounded action, review boundary, source capture, evidence custody, and exception context you submitted.</p>
+      <p style="color:#475569;">Please do not send secrets, credentials, raw sensitive evidence, privileged material, or customer payloads by email. We will follow up if sanitized supporting materials are needed.</p>
+      <p>ProofWarden</p>
+    </div>
+  `;
+}
+
 function escapeHtml(value: string) {
   return value
     .replace(/&/g, "&amp;")
@@ -227,6 +296,15 @@ function escapeHtml(value: string) {
 
 function cleanProviderMessage(value: unknown) {
   return typeof value === "string" ? value.slice(0, 240) : undefined;
+}
+
+function parseRecipientEmails(value: string | undefined, fallback: string) {
+  const emails = (value || fallback)
+    .split(/[,\s;]+/)
+    .map((item) => item.trim())
+    .filter(Boolean);
+
+  return Array.from(new Set(emails));
 }
 
 function getEmailDomain(value: string) {
